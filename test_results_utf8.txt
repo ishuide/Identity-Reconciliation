@@ -1,0 +1,174 @@
+﻿--- STARTING USER-SPECIFIED TEST SCENARIOS ---
+
+--- Case 1: New User (Initial Entry) ---
+Input: { "email": "marty@mcfly.com", "phoneNumber": "5550199" }
+Response: {
+  "contact": {
+    "primaryContatctId": 4,
+    "emails": [
+      "marty@mcfly.com",
+      "calvin.klein@mcfly.com"
+    ],
+    "phoneNumbers": [
+      "5550199"
+    ],
+    "secondaryContactIds": [
+      5
+    ]
+  }
+}
+
+--- Case 2: Existing User (Secondary Creation) ---
+Input: { "email": "calvin.klein@mcfly.com", "phoneNumber": "5550199" }
+Response: {
+  "contact": {
+    "primaryContatctId": 4,
+    "emails": [
+      "marty@mcfly.com",
+      "calvin.klein@mcfly.com"
+    ],
+    "phoneNumbers": [
+      "5550199"
+    ],
+    "secondaryContactIds": [
+      5
+    ]
+  }
+}
+
+--- Case 3: Primary Merge (Two Primaries become One) ---
+Setting up Pre-existing Database State for Case 3...
+Created Contact A (ID: 15) and Contact B (ID: 16) as primaries.
+Sending Request: { "email": "doc@brown.com", "phoneNumber": "2222" }
+Response: {
+  "contact": {
+    "primaryContatctId": 6,
+    "emails": [
+      "doc@brown.com",
+      "einstein@dog.com"
+    ],
+    "phoneNumbers": [
+      "1111",
+      "2222"
+    ],
+    "secondaryContactIds": [
+      7,
+      12,
+      13,
+      15,
+      16
+    ]
+  }
+}
+
+--- Case 4: Partial Match (No New Info) ---
+Input: { "email": "marty@mcfly.com", "phoneNumber": "5550199" }
+Response: {
+  "contact": {
+    "primaryContatctId": 4,
+    "emails": [
+      "marty@mcfly.com",
+      "calvin.klein@mcfly.com"
+    ],
+    "phoneNumbers": [
+      "5550199"
+    ],
+    "secondaryContactIds": [
+      5
+    ]
+  }
+}
+
+--- Test Data Table Summary Cases ---
+Scenario: user1@test.com / 12345 (New Primary)
+{
+  "contact": {
+    "primaryContatctId": 8,
+    "emails": [
+      "user1@test.com",
+      "user2@test.com",
+      "other@test.com"
+    ],
+    "phoneNumbers": [
+      "12345",
+      "67890",
+      "99999"
+    ],
+    "secondaryContactIds": [
+      9,
+      10,
+      11,
+      14
+    ]
+  }
+}
+Scenario: user1@test.com / 67890 (New Secondary linking to user1)
+{
+  "contact": {
+    "primaryContatctId": 8,
+    "emails": [
+      "user1@test.com",
+      "user2@test.com",
+      "other@test.com"
+    ],
+    "phoneNumbers": [
+      "12345",
+      "67890",
+      "99999"
+    ],
+    "secondaryContactIds": [
+      9,
+      10,
+      11,
+      14
+    ]
+  }
+}
+Scenario: user2@test.com / 67890 (New Secondary linking to user1 via 67890)
+{
+  "contact": {
+    "primaryContatctId": 8,
+    "emails": [
+      "user1@test.com",
+      "user2@test.com",
+      "other@test.com"
+    ],
+    "phoneNumbers": [
+      "12345",
+      "67890",
+      "99999"
+    ],
+    "secondaryContactIds": [
+      9,
+      10,
+      11,
+      14
+    ]
+  }
+}
+Scenario: user1@test.com / 99999 (If 99999 belonged to another Primary)
+Created another primary with phone 99999 (ID: 17)
+Result for user1@test.com / 99999:
+{
+  "contact": {
+    "primaryContatctId": 8,
+    "emails": [
+      "user1@test.com",
+      "user2@test.com",
+      "other@test.com"
+    ],
+    "phoneNumbers": [
+      "12345",
+      "67890",
+      "99999"
+    ],
+    "secondaryContactIds": [
+      9,
+      10,
+      11,
+      14,
+      17
+    ]
+  }
+}
+

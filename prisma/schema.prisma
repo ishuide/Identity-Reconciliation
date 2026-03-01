@@ -1,0 +1,25 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Contact {
+  id              Int      @id @default(autoincrement())
+  phoneNumber     String?
+  email           String?
+  linkedId        Int?     // References another Contact.id
+  linkPrecedence  String   // "primary" or "secondary"
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+  deletedAt       DateTime?
+  
+  // Self-relation for linking contacts
+  linkedContact   Contact? @relation("ContactLinking", fields: [linkedId], references: [id])
+  linkedContacts  Contact[] @relation("ContactLinking")
+}
