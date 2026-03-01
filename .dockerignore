@@ -1,9 +1,0 @@
-node_modules
-dist
-prisma/dev.db
-prisma/dev.db-journal
-test_output.txt
-test_results_final.txt
-test_results_utf8.txt
-.env
-.git
