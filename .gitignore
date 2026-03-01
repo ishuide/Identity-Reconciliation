@@ -8,3 +8,13 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .DS_Store
+gpu_env/
+tracked_files.txt
+test_output.txt
+test_results_final.txt
+test_results_utf8.txt
+src/check-db.ts
+src/reset-db.ts
+src/test-scenarios-refined.ts
+src/test-scenarios.ts
+src/verify-logic.ts
