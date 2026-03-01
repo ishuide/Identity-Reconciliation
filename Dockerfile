@@ -1,15 +1,17 @@
-FROM node:24-alpine
+FROM node:22-alpine
 
 WORKDIR /app
 
+# Install dependencies
 COPY package*.json ./
-COPY prisma ./prisma/
-
 RUN npm install
 
-COPY . .
-
+# Copy source and generate prisma client
+COPY prisma ./prisma/
 RUN npx prisma generate
+
+# Copy the rest and build
+COPY . .
 RUN npm run build
 
 EXPOSE 3000
