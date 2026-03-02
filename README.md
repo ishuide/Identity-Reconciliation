@@ -1,70 +1,102 @@
-# 🚀 Engineering Systems Project  
-*A production-oriented full-stack system inspired by real-world SaaS engineering roles*
+# Identity Reconciliation Service
+
+A robust Node.js and TypeScript web service designed to reconcile multiple user identities into a single "Primary" contact profile. This service handles merging overlapping contact information (emails and phone numbers) to create a unified view of a customer.
 
 ---
 
-## Overview
+## 🚀 Live Endpoint
 
-This repository contains a **production-minded engineering project** designed to mirror the expectations of fast-moving, high-ownership SaaS teams.  
-The focus is not just on *making something work*, but on **how it is designed, scaled, and reasoned about**.
-
-The project emphasizes:
-- End-to-end ownership (design → implementation → iteration)
-- Clean system boundaries
-- Practical engineering trade-offs
-- Readability, maintainability, and performance
-
-This is not a tutorial project.  
-It is a **deliberate attempt to think and build like an engineer in a real company environment**.
+**Base URL**: `https://identity-reconciliation-ishuide.onrender.com` (Example - Please update once deployed)
+**Endpoint**: `POST /identify`
 
 ---
 
-## Core Objectives
+## 🛠️ Tech Stack
 
-- Build a **realistic application architecture**, not a demo
-- Follow **industry-standard backend and frontend practices**
-- Design APIs and data models that can scale
-- Write code that another engineer can easily reason about
-- Treat performance, structure, and clarity as first-class concerns
-
----
-
-## System Highlights
-
-- **Modular architecture** with clear separation of concerns  
-- **RESTful API design** with predictable contracts  
-- **Database-first thinking**: schemas designed for real usage patterns  
-- **Frontend ↔ Backend integration** with realistic data flow  
-- Thoughtful error handling, validation, and edge-case coverage  
+- **Runtime**: Node.js (v22+)
+- **Language**: TypeScript
+- **Framework**: Express.js
+- **ORM**: Prisma
+- **Database**: SQLite (Local/Development)
+- **Deployment**: Render / Docker
 
 ---
 
-## Tech Stack
+## 📖 API Documentation
 
-- **Frontend**: React / Next.js  
-- **Backend**: Node.js + Express / TypeScript  
-- **Database**: PostgreSQL / MongoDB  
-- **Tooling**: Git, REST APIs, basic CI practices  
+### Identify Contact
+Reconciles an incoming contact request with existing records.
+
+- **URL**: `/identify`
+- **Method**: `POST`
+- **Body**:
+  ```json
+  {
+    "email": "mcfly@hillvalley.edu",
+    "phoneNumber": "123456"
+  }
+  ```
+- **Success Response (200 OK)**:
+  ```json
+  {
+    "contact": {
+      "primaryContatctId": 1,
+      "emails": ["mcfly@hillvalley.edu"],
+      "phoneNumbers": ["123456"],
+      "secondaryContactIds": []
+    }
+  }
+  ```
 
 ---
 
-## Project Structure
+## 💻 Local Development
 
-```text
-.
-├── backend/
-│   ├── controllers/
-│   ├── services/
-│   ├── routes/
-│   ├── models/
-│   └── utils/
-│
-├── frontend/
-│   ├── components/
-│   ├── pages/
-│   ├── hooks/
-│   └── services/
-│
-├── docs/
-├── README.md
-└── package.json
+### Prerequisites
+- [Docker](https://www.docker.com/products/docker-desktop/) installed.
+
+### Setup using Docker
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/ishuide/Identity-Reconciliation.git
+   cd Identity-Reconciliation
+   ```
+
+2. **Build and Run**:
+   ```bash
+   docker build -t identity-reconciliation .
+   docker run -p 3000:3000 identity-reconciliation
+   ```
+
+3. **Access the service**:
+   The service will be available at `http://localhost:3000`.
+
+### Manual Setup (without Docker)
+1. **Install dependencies**:
+   ```bash
+   npm install
+   ```
+2. **Setup Database**:
+   ```bash
+   npx prisma generate
+   npx prisma db push
+   ```
+3. **Run in development mode**:
+   ```bash
+   npm run dev
+   ```
+
+---
+
+## 🏗️ Architecture & Logic
+
+- **Primary Contact**: The oldest contact in a linked group.
+- **Secondary Contact**: Any contact created after the primary or linked to it.
+- **Link Precedence**: 
+  - If a new request contains info that matches two different primary contacts, the older one remains primary and the newer one (and its secondaries) are updated to point to the older one.
+  - If a new request contains a new email/phone number for an existing contact, a new secondary contact is created.
+
+---
+
+## 📝 License
+ISC

@@ -1,1 +1,25 @@
-﻿# Force rebuild commit FROM node:22-alpine  WORKDIR /app  # Install dependencies COPY package*.json ./ RUN npm install  # Copy source and generate prisma client COPY prisma ./prisma/ RUN npx prisma generate  # Copy the rest and build COPY . . RUN npm run build  EXPOSE 3000  CMD ["npm", "start"]
+﻿# Use Node base image
+FROM node:22-alpine
+
+# Set working directory
+WORKDIR /app
+
+# Install dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy prisma and generate client
+COPY prisma ./prisma/
+RUN npx prisma generate
+
+# Copy rest of project
+COPY . .
+
+# Build project
+RUN npm run build
+
+# Expose port
+EXPOSE 3000
+
+# Start app
+CMD ["npm", "start"]
