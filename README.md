@@ -96,7 +96,3 @@ Reconciles an incoming contact request with existing records.
   - If a new request contains info that matches two different primary contacts, the older one remains primary and the newer one (and its secondaries) are updated to point to the older one.
   - If a new request contains a new email/phone number for an existing contact, a new secondary contact is created.
 
----
-
-## 📝 License
-ISC
