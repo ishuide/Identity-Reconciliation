@@ -6,6 +6,10 @@ const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
+app.get('/', (req, res) => {
+    res.status(200).send('Identity Reconciliation Service is running. Use POST /identify to reconcile contacts.');
+});
+
 app.post('/identify', async (req, res) => {
     const { email, phoneNumber } = req.body;
 

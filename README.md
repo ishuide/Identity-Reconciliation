@@ -6,7 +6,7 @@ A robust Node.js and TypeScript web service designed to reconcile multiple user 
 
 ## 🚀 Live Endpoint
 
-**Base URL**: `https://identity-reconciliation-ishuide.onrender.com` (Example - Please update once deployed)
+**Base URL**: `https://identity-reconciliation-bitespeed-lq3v.onrender.com`
 **Endpoint**: `POST /identify`
 
 ---
