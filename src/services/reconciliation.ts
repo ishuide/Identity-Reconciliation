@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export interface ReconciliationResponse {
     contact: {
-        primaryContatctId: number;
+        primaryContactId: number;
         emails: string[];
         phoneNumbers: string[];
         secondaryContactIds: number[];
@@ -139,7 +139,7 @@ async function formatResponse(primaryId: number): Promise<ReconciliationResponse
 
     return {
         contact: {
-            primaryContatctId: primaryId,
+            primaryContactId: primaryId,
             emails: Array.from(emails),
             phoneNumbers: Array.from(phoneNumbers),
             secondaryContactIds,

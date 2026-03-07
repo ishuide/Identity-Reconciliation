@@ -9,6 +9,8 @@ A robust Node.js and TypeScript web service designed to reconcile multiple user 
 **Base URL**: `https://identity-reconciliation-bitespeed-lq3v.onrender.com`
 **Endpoint**: `POST /identify`
 
+[**Read the Usage Guide (USAGE.md)**](./USAGE.md) for local setup and testing instructions.
+
 ---
 
 ## 🛠️ Tech Stack
@@ -40,7 +42,7 @@ Reconciles an incoming contact request with existing records.
   ```json
   {
     "contact": {
-      "primaryContatctId": 1,
+      "primaryContactId": 1,
       "emails": ["mcfly@hillvalley.edu"],
       "phoneNumbers": ["123456"],
       "secondaryContactIds": []
